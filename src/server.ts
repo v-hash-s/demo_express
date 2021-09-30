@@ -58,7 +58,9 @@ app.post('/', (req: Request, res: Response) => {
 app.get(`/gallery`, async (req: Request, res: Response) => {
     console.log(req.originalUrl)
     let pageNumber = req.query.page;
-    console.log(pageNumber)
+    if (pageNumber == null) {
+        pageNumber = "1";
+    }
     // console.log(req.query.page)
     
     // console.log(req.originalUrl)
@@ -70,7 +72,7 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
     // res.render((path.join(__dirname, '../static/pages/gallery.ejs')), {gallery: objects})
     
 
-    res.render((path.join(__dirname, '../static/pages/gallery.ejs')), {objects})
+    res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { objects })
 
 })
 

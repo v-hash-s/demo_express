@@ -91,7 +91,9 @@ app.get("/gallery", function (req, res) { return __awaiter(void 0, void 0, void 
             case 0:
                 console.log(req.originalUrl);
                 pageNumber = req.query.page;
-                console.log(pageNumber);
+                if (pageNumber == null) {
+                    pageNumber = "1";
+                }
                 return [4 /*yield*/, (0, gallery_1.sendGalleryObject)(pageNumber)];
             case 1:
                 objects = _a.sent();
