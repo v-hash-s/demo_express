@@ -81,8 +81,7 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
         } else {
             console.log('NOT EMPRTY')
             
-            // let ejsData = {objects, photo}
-            // res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { ejsData })
+
             console.log(files)
             let photo = files;
             console.log(photo)
@@ -91,27 +90,7 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
         }
     })
 
-    // let files = fs.readdir(destination, (err: any, files: any) => {
-    //     if(err){
-    //         console.log(err)
-    //     } else {
-    //         console.log("FILES: " + files)
-    //     }
-    // })
 
-    //  if(files.length <= 0){
-    //             // res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { objects })
-    //             console.log('NOT EMPTY')
-
-    //         } else {
-    //             console.log('NOT EMPRTY')
-                
-    //             // let ejsData = {objects, photo}
-    //             // res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { ejsData })
-                
-    //         }
-
-    // res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
 
 })
 
@@ -136,21 +115,7 @@ const upload = multer({storage: fileStorage}).single('photo')
 
 app.post('/gallery', upload, async (req: MulterRequest, res: Response) => {
 
-    // console.log(req.originalUrl)
-    // let pageNumber = req.query.page;
-    // if (pageNumber == null) {
-    //     pageNumber = "1";
-    // }
 
- 
-    // let objects = await sendGalleryObject(pageNumber);
-    // console.log(req.file.originalname)
- 
-    // let photo = fs.readdir()
-    
-    // let ejsData = {objects, photo}
-   
-    // res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { ejsData })
 
     res.redirect('/gallery')
     
