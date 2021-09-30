@@ -34,19 +34,20 @@ app.use(express.static(path.join(__dirname, '../static/photos/second_page')))
 app.use(express.static(path.join(__dirname, '../static/photos/third_page')))
 app.use(express.static(path.join(__dirname, '../static/photos/fourth_page')))
 app.use(express.static(path.join(__dirname, '../static/photos/fifth_page')))
+
+ const destination = path.join('../static/photos/uploads');
+ app.use(express.static(destination))
+app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
+
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'))
 
-// let page: string;
 
 app.get('/', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
 })
 
 app.post('/', (req: Request, res: Response) => {
-    // if(req.body.page){
-    //     page = req.body.page
-    // }
-    // console.log("Page: " + page)
+
     console.log("Body: " + JSON.stringify(req.body))
     if (req.body.email in users && req.body.password === users[req.body.email]){
         console.log("Email: " + req.body.email)
@@ -59,9 +60,7 @@ app.post('/', (req: Request, res: Response) => {
     }
 })
 
-// app.get('/gallery', (req: Request, res: Response) => {
-//     res.redirect(`/gallery?page=${page}`)
-// })
+
 
 app.get(`/gallery`, async (req: Request, res: Response) => {
     console.log(req.originalUrl)
@@ -69,26 +68,20 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
     if (pageNumber == null) {
         pageNumber = "1";
     }
-    // console.log(req.query.page)
-    
-    // console.log(req.originalUrl)
-    
-    //     console.log('gallery')
-    //     res.sendFile(path.join(__dirname, '../static/pages/gallery.html'))
+
+   
     let objects = await sendGalleryObject(pageNumber);
     console.log("Objects: " + JSON.stringify(objects))
-    // res.render((path.join(__dirname, '../static/pages/gallery.ejs')), {gallery: objects})
+    let ejsData = {
+        objects
+    }
     
 
-    res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { objects })
+    res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
 
 })
 
 
-// upload photos
-
-const destination = path.join(__dirname, '../static/photos/uploads');
-app.use(express.static(destination))
 
 console.log(destination)
 
@@ -101,22 +94,37 @@ const fileStorage = multer.diskStorage({
 })
 
 
-// Create multer object
-// const imageUpload = multer({
-//     dest: destination,
-    
-// });
 
-const upload = multer({storage: fileStorage}).single('file')
 
-app.post('/gallery', upload, (req: MulterRequest, res: Response) => {
+const upload = multer({storage: fileStorage}).single('photo')
+
+
+
+app.post('/gallery', upload, async (req: MulterRequest, res: Response) => {
+
+    console.log(req.originalUrl)
+    let pageNumber = req.query.page;
+    if (pageNumber == null) {
+        pageNumber = "1";
+    }
+
+ 
+    let objects = await sendGalleryObject(pageNumber);
     console.log(req.file.originalname)
-    // res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { file: req.file })
-    // res.sendFile(path.join(destination, req.file))
+ 
+    let photo = req.file.path
+    
+    let ejsData = {objects, photo}
+   
+    res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { ejsData })
+    
 })
 
 
 
 
+
+
 app.listen(8080, () => console.log('At 8080 port...'))
+
 

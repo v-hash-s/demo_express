@@ -11,13 +11,21 @@
 <body>
 
     <form method="post" action="/gallery" enctype="multipart/form-data">
-        <input type="file" name="file">
+        <input type="file" name="photo">
         <input type="submit" value="Submit">
+        
     </form>
 
-    <div id="gallery">
+    <%= ejsData %>
+    <% if(ejsData.photo && ejsData.objects){ %>
+        <img src='<%= ejsData.photo %>' height='200' width='200'/>
+        <% ejsData.objects.objects.forEach(function (object) { %>
+               <img src='<%= object %>' height='200' width='200'/>
+         <% }) %>
+        <% } %>
         
-         <% objects.objects.forEach(function (object) { %>
+        
+         <% ejsData.objects.objects.forEach(function (object) { %>
                <img src='<%= object %>' height='200' width='200'/>
          <% }) %>
     </div>
