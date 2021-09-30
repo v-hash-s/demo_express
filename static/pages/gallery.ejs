@@ -10,6 +10,11 @@
 
 <body>
 
+    <form method="post" action="/gallery" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Submit">
+    </form>
+
     <div id="gallery">
         
          <% objects.objects.forEach(function (object) { %>

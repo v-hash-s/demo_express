@@ -7,6 +7,14 @@ const path = require('path')
 const fs = require('fs');
 const app = express()
 const bodyParser = require('body-parser');
+const multer = require('multer')
+
+
+interface MulterRequest extends Request {
+    file: any;
+}
+
+
 const token: Token = {
     'token': 'token',
 }
@@ -74,6 +82,37 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
 
     res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { objects })
 
+})
+
+
+// upload photos
+
+const destination = path.join(__dirname, '../static/photos/uploads');
+app.use(express.static(destination))
+
+console.log(destination)
+
+
+const fileStorage = multer.diskStorage({
+    destination: destination,
+    filename: (req: MulterRequest, file: any, cb: any) => {
+        cb(null, file.fieldname + '-' + Date.now() + '.jpeg');
+}
+})
+
+
+// Create multer object
+// const imageUpload = multer({
+//     dest: destination,
+    
+// });
+
+const upload = multer({storage: fileStorage}).single('file')
+
+app.post('/gallery', upload, (req: MulterRequest, res: Response) => {
+    console.log(req.file.originalname)
+    // res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { file: req.file })
+    // res.sendFile(path.join(destination, req.file))
 })
 
 

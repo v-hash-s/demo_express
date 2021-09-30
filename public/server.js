@@ -42,6 +42,7 @@ var path = require('path');
 var fs = require('fs');
 var app = express();
 var bodyParser = require('body-parser');
+var multer = require('multer');
 var token = {
     'token': 'token',
 };
@@ -104,4 +105,24 @@ app.get("/gallery", function (req, res) { return __awaiter(void 0, void 0, void 
         }
     });
 }); });
+// upload photos
+var destination = path.join(__dirname, '../static/photos/uploads');
+app.use(express.static(destination));
+console.log(destination);
+var fileStorage = multer.diskStorage({
+    destination: destination,
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.jpeg');
+    }
+});
+// Create multer object
+// const imageUpload = multer({
+//     dest: destination,
+// });
+var upload = multer({ storage: fileStorage }).single('file');
+app.post('/gallery', upload, function (req, res) {
+    console.log(req.file.originalname);
+    // res.render(path.join(__dirname, '../static/pages/gallery.ejs'), { file: req.file })
+    // res.sendFile(path.join(destination, req.file))
+});
 app.listen(8080, function () { return console.log('At 8080 port...'); });
