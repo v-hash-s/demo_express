@@ -16,18 +16,24 @@
         
     </form>
 
-    <%= ejsData %>
+
     <% if(ejsData.photo && ejsData.objects){ %>
-        <img src='<%= ejsData.photo %>' height='200' width='200'/>
+
+        <% ejsData.photo.forEach(function (photo) { %>
+            <img src='<%= photo %>' height='200' width='200'/>
+      <% }) %>
+
+       
         <% ejsData.objects.objects.forEach(function (object) { %>
                <img src='<%= object %>' height='200' width='200'/>
          <% }) %>
-        <% } %>
-        
-        
-         <% ejsData.objects.objects.forEach(function (object) { %>
-               <img src='<%= object %>' height='200' width='200'/>
-         <% }) %>
+        <% }  else {%>
+
+            <% ejsData.objects.objects.forEach(function (object) { %>
+                <img src='<%= object %>' height='200' width='200'/>
+            <% }) %>
+            
+            <% } %>
     </div>
     <!-- <img src="../photos/first_page/anton-ivanov-L38IxgRzVcE-unsplash.jpg" alt=""> -->
     <div id="buttons">
