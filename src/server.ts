@@ -10,6 +10,9 @@ const bodyParser = require('body-parser');
 const multer = require('multer')
 
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
+
 interface MulterRequest extends Request {
     file: any;
 }
@@ -35,9 +38,9 @@ app.use(express.static(path.join(__dirname, '../static/photos/third_page')))
 app.use(express.static(path.join(__dirname, '../static/photos/fourth_page')))
 app.use(express.static(path.join(__dirname, '../static/photos/fifth_page')))
 
- const destination = path.join('../static/photos/uploads');
- app.use(express.static(destination))
-app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
+//  const destination = path.join('../static/photos/uploads');
+//  app.use(express.static(destination))
+// app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'))
 
@@ -68,7 +71,7 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
     if (pageNumber == null) {
         pageNumber = "1";
     }
-
+    let destination = path.join('../static/photos/uploads');
    
     let objects = await sendGalleryObject(pageNumber);
     console.log("Objects: " + JSON.stringify(objects))
@@ -96,24 +99,39 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
 
 
 
-console.log(destination)
-
-
-const fileStorage = multer.diskStorage({
-    destination: destination,
-    filename: (req: MulterRequest, file: any, cb: any) => {
-        cb(null, file.fieldname + '-' + Date.now() + '.jpeg');
-}
-})
+// console.log(destination)
 
 
 
 
-const upload = multer({storage: fileStorage}).single('photo')
 
 
 
-app.post('/gallery', upload, async (req: MulterRequest, res: Response) => {
+// const upload = multer({storage: fileStorage}).single('photo')
+
+
+
+app.post('/gallery' , (req: MulterRequest, res: Response) => {
+    const destination = path.join('../static/photos/uploads');
+    app.use(express.static(destination))
+    app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
+    console.log('POOOOST')
+    console.log('REQ URL: ', req.query);
+    
+    const fileStorage = multer.diskStorage({
+        destination: destination,
+        filename: (req: MulterRequest, file: any, cb: any) => {
+            cb(null, file.fieldname + '-' + Date.now() + '.jpeg');
+    }
+    })
+
+    const upload = multer({storage: fileStorage}).single('photo')
+
+    upload(req, res, function(err: any) {
+        if(err){
+            console.log(err)
+        }
+    })
 
 
 
