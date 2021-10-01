@@ -2,6 +2,7 @@ import { UsersDB, Token, ErrorMessage } from "./interfaces"
 import {Request, Response} from "express"
 import { runInNewContext } from "vm";
 import { sendGalleryObject } from "./gallery";
+import { Console } from "console";
 const express = require('express')
 const path = require('path')
 const fs = require('fs');
@@ -11,7 +12,7 @@ const multer = require('multer')
 
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: true}))
+app.use(bodyParser.urlencoded({ extended: true}))
 
 interface MulterRequest extends Request {
     file: any;
@@ -66,7 +67,7 @@ app.post('/', (req: Request, res: Response) => {
 
 
 app.get(`/gallery`, async (req: Request, res: Response) => {
-    console.log(req.originalUrl)
+    // console.log(req.originalUrl)
     let pageNumber = req.query.page;
     if (pageNumber == null) {
         pageNumber = "1";
@@ -74,9 +75,9 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
     let destination = path.join('../static/photos/uploads');
    
     let objects = await sendGalleryObject(pageNumber);
-    console.log("Objects: " + JSON.stringify(objects))
+    // console.log("Objects: " + JSON.stringify(objects))
     let ejsData = { }
-    console.log("!!!!")
+    // console.log("!!!!")
     let files = fs.readdir(destination, (err: any, files: any) => {
         if(files.length <= 0){
             ejsData = { objects }
@@ -85,9 +86,9 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
             console.log('NOT EMPRTY')
             
 
-            console.log(files)
+            // console.log(files)
             let photo = files;
-            console.log(photo)
+            // console.log(photo)
             ejsData = {objects, photo}
             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
         }
@@ -112,27 +113,42 @@ app.get(`/gallery`, async (req: Request, res: Response) => {
 
 
 app.post('/gallery' , (req: MulterRequest, res: Response) => {
-    const destination = path.join('../static/photos/uploads');
-    app.use(express.static(destination))
+    // const destination = path.join('../static/photos/uploads');
     app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
     console.log('POOOOST')
-    console.log('REQ URL: ', req.query);
+    console.log(req.body)
+    const pageNumber = req.body.pageNumber
+    console.log("PAGE NUMBER: ", pageNumber)
+    // let pageDestination = path.join(__dirname, `./static/permanentUploads/${req.body.pageNumber}`)
+    let pageDestination = path.join(__dirname, `../static/photos/permanentUploads/${pageNumber}`)
+    app.use(express.static(pageDestination))
+
+    console.log("PAGE DESTINATION: ", pageDestination)
+    
     
     const fileStorage = multer.diskStorage({
-        destination: destination,
+        destination: pageDestination,
         filename: (req: MulterRequest, file: any, cb: any) => {
             cb(null, file.fieldname + '-' + Date.now() + '.jpeg');
-    }
+        }
     })
-
+    // console.log(fileStorage.pageNumber)
     const upload = multer({storage: fileStorage}).single('photo')
-
+    // console.log(req.file)
+    console.log("here")
     upload(req, res, function(err: any) {
+        console.log('there')
+        console.log(req.file)
         if(err){
             console.log(err)
         }
     })
 
+    console.log('after')
+
+ 
+    
+  
 
 
     res.redirect('/gallery')

@@ -10,8 +10,8 @@
 
 <body>
 
-    <form method="post" action="/gallery" enctype="multipart/form-data">
-        <input type="file" name="photo">
+    <form method="post" enctype="multipart/form-data" id='form'>
+        <input type="file" name="photo" id='photo'>
         <input type="submit" value="Submit">
         
     </form>
@@ -41,7 +41,7 @@
                 <button id="next">></button>
     </div>
 
-    <script src="./gallery.js"></script>
+    <script src="./gallery.js" defer></script>
 </body>
 
 </html>

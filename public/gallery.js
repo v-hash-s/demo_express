@@ -85,21 +85,19 @@ function sendGalleryObject(pageNumber) {
                             }];
                     }
                     dir = path.join(__dirname, '../static/photos', folders[pageNumber]);
-                    console.log("Dir: " + dir);
                     return [4 /*yield*/, readdir(dir)];
                 case 1:
                     files = _a.sent();
                     files.forEach(function (file) {
                         photos.push(file);
                     });
-                    console.log("Photos: " + photos);
                     galleryResponse = {
                         // objects: mappedArray(photos, pageNumber),
                         objects: photos,
                         page: pageNumber.toString(),
                         total: 5
                     };
-                    console.log(galleryResponse);
+                    // console.log(galleryResponse)
                     return [2 /*return*/, galleryResponse];
             }
         });
@@ -110,7 +108,7 @@ function mappedArray(arr, pageNumber) {
     var newArr = [];
     newArr = arr.map(function (img) {
         var dir = path.join(__dirname, '../static/photos');
-        console.log(img);
+        // console.log(img)
         return path.join(dir, folders[pageNumber] + "/", img);
     });
     return newArr;
