@@ -43,14 +43,14 @@ var path = require('path');
 var fs = require('fs');
 var app = express();
 var bodyParser = require('body-parser');
-var token = {
-    'token': 'token',
-};
-var users = {
-    'asergeev@flo.team': 'jgF5tn4F',
-    'vkotikov@flo.team': 'po3FGas8',
-    'tpupkin@flo.team': 'tpupkin@flo.team',
-};
+// const token: Token = {
+//     'token': 'token',
+// }
+// const users: UsersDB = {
+//     'asergeev@flo.team': 'jgF5tn4F',
+//     'vkotikov@flo.team': 'po3FGas8',
+//     'tpupkin@flo.team': 'tpupkin@flo.team',
+// }
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -68,22 +68,23 @@ var destination = path.join('../static/photos/uploads');
 app.use(express.static(destination));
 app.use('/static/photos/uploads', express.static('../static/photos/uploads'));
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'));
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../static/pages/index.html'));
-});
-app.post('/', function (req, res) {
-    console.log("Body: " + JSON.stringify(req.body));
-    if (req.body.email in users && req.body.password === users[req.body.email]) {
-        console.log("Email: " + req.body.email);
-        console.log("Password: " + req.body.password);
-        res.header({ 'Access-Control-Allow-Origin': '*' });
-        res.status(200);
-        res.send(JSON.stringify(token));
-    }
-    else {
-        console.log('Not found');
-    }
-});
+var loginRoiter = require('./loginRouter.js');
+app.use('/', loginRoiter);
+// app.get('/', (req: Request, res: Response) => {
+//     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
+// })
+// app.post('/', (req: Request, res: Response) => {
+//     console.log("Body: " + JSON.stringify(req.body))
+//     if (req.body.email in users && req.body.password === users[req.body.email]){
+//         console.log("Email: " + req.body.email)
+//         console.log("Password: " + req.body.password)
+//         res.header( {'Access-Control-Allow-Origin': '*'} );
+//         res.status(200);
+//         res.send(JSON.stringify(token))
+//     } else {
+//         console.log('Not found')
+//     }
+// })
 app.get("/gallery", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var pageNumber, objects, ejsData, files;
     return __generator(this, function (_a) {

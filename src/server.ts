@@ -11,15 +11,15 @@ const app = express()
 const bodyParser = require('body-parser');
 
 
-const token: Token = {
-    'token': 'token',
-}
+// const token: Token = {
+//     'token': 'token',
+// }
 
-const users: UsersDB = {
-    'asergeev@flo.team': 'jgF5tn4F',
-    'vkotikov@flo.team': 'po3FGas8',
-    'tpupkin@flo.team': 'tpupkin@flo.team',
-}
+// const users: UsersDB = {
+//     'asergeev@flo.team': 'jgF5tn4F',
+//     'vkotikov@flo.team': 'po3FGas8',
+//     'tpupkin@flo.team': 'tpupkin@flo.team',
+// }
 
 app.set("view engine", "ejs");
 app.use(bodyParser.json())
@@ -42,23 +42,27 @@ app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'))
 
 
-app.get('/', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, '../static/pages/index.html'))
-})
+let loginRoiter = require('./loginRouter.js')
 
-app.post('/', (req: Request, res: Response) => {
+app.use('/', loginRoiter)
 
-    console.log("Body: " + JSON.stringify(req.body))
-    if (req.body.email in users && req.body.password === users[req.body.email]){
-        console.log("Email: " + req.body.email)
-        console.log("Password: " + req.body.password)
-        res.header( {'Access-Control-Allow-Origin': '*'} );
-        res.status(200);
-        res.send(JSON.stringify(token))
-    } else {
-        console.log('Not found')
-    }
-})
+// app.get('/', (req: Request, res: Response) => {
+//     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
+// })
+
+// app.post('/', (req: Request, res: Response) => {
+
+//     console.log("Body: " + JSON.stringify(req.body))
+//     if (req.body.email in users && req.body.password === users[req.body.email]){
+//         console.log("Email: " + req.body.email)
+//         console.log("Password: " + req.body.password)
+//         res.header( {'Access-Control-Allow-Origin': '*'} );
+//         res.status(200);
+//         res.send(JSON.stringify(token))
+//     } else {
+//         console.log('Not found')
+//     }
+// })
 
 
 
