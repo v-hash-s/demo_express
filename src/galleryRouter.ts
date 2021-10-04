@@ -26,9 +26,6 @@ router.options('/', (req: Request, res: Response) => {
 })
 
 router.get('/', async function(req: Request, res: Response){
-    console.log(req.headers)
-  
-    console.log(req.originalUrl)
     let pageNumber = req.query.page;
     if (pageNumber == null) {
         pageNumber = "1";
@@ -36,9 +33,7 @@ router.get('/', async function(req: Request, res: Response){
 
    
     let objects = await sendGalleryObject(pageNumber);
-    console.log("Objects: " + JSON.stringify(objects))
     let ejsData = { }
-    console.log("!!!!")
     let files = fs.readdir(destination, (err: any, files: any) => {
         if(files.length <= 0){
             ejsData = { objects }

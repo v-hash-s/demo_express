@@ -37,7 +37,6 @@ router.get('/', function(req: Request, res: Response){
 
 
  router.post('/', function(req: Request, res: Response){
-    console.log("Body: " + JSON.stringify(req.body))
     if (req.body.email in users && req.body.password === users[req.body.email]){
         res.cookie('token', 'token')
         res.header("Authorization", 'token')

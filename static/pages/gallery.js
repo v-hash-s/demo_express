@@ -47,8 +47,7 @@ const btnNext = document.getElementById('next');
 async function createGalleryPage(pageNumber) {
     
 
-    let answer = await response.json()
-    console.log(answer)
+    
     // console.log(response)
     try {
         checkTime();

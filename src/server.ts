@@ -11,6 +11,10 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 
 
+const logger = require('./logger');
+
+app.use(express.json(), logger);
+
 app.set("view engine", "ejs");
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -31,7 +35,7 @@ const destination = path.join('../static/photos/uploads');
 app.use(express.static(destination))
 app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 
-// console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'))
+
 let cookieParser = require('cookie-parser')
 app.use(cookieParser())
 

@@ -57,9 +57,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendGalleryObject = exports.folders = void 0;
 var util = __importStar(require("util"));
-// const fs = require('fs')
 var fs = __importStar(require("fs"));
-// const path = require('path')
 var path = __importStar(require("path"));
 var readdir = util.promisify(fs.readdir);
 var folders;
@@ -94,7 +92,6 @@ function sendGalleryObject(pageNumber) {
                     });
                     console.log("Photos: " + photos);
                     galleryResponse = {
-                        // objects: mappedArray(photos, pageNumber),
                         objects: photos,
                         page: pageNumber.toString(),
                         total: 5
@@ -106,12 +103,12 @@ function sendGalleryObject(pageNumber) {
     });
 }
 exports.sendGalleryObject = sendGalleryObject;
-function mappedArray(arr, pageNumber) {
-    var newArr = [];
-    newArr = arr.map(function (img) {
-        var dir = path.join(__dirname, '../static/photos');
-        console.log(img);
-        return path.join(dir, folders[pageNumber] + "/", img);
-    });
-    return newArr;
-}
+// function mappedArray(arr: Array<string>, pageNumber: number): Array<string>{
+//     let newArr: Array<string> = []
+//     newArr = arr.map((img) => {
+//         let dir = path.join(__dirname, '../static/photos')
+//         console.log(img)
+//         return path.join(dir, `${folders[pageNumber]}/`, img)
+//     })
+//     return newArr;
+// }

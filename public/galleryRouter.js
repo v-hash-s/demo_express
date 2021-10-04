@@ -64,8 +64,6 @@ router.get('/', function (req, res) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log(req.headers);
-                    console.log(req.originalUrl);
                     pageNumber = req.query.page;
                     if (pageNumber == null) {
                         pageNumber = "1";
@@ -73,19 +71,14 @@ router.get('/', function (req, res) {
                     return [4 /*yield*/, (0, gallery_1.sendGalleryObject)(pageNumber)];
                 case 1:
                     objects = _a.sent();
-                    console.log("Objects: " + JSON.stringify(objects));
                     ejsData = {};
-                    console.log("!!!!");
                     files = fs.readdir(destination, function (err, files) {
                         if (files.length <= 0) {
                             ejsData = { objects: objects };
                             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
                         }
                         else {
-                            // console.log('NOT EMPRTY')
-                            // console.log(files)
                             var photo = files;
-                            // console.log(photo)
                             ejsData = { objects: objects, photo: photo };
                             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
                         }

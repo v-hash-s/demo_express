@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
-// router.use(require('./auth'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var formidableMiddleware = require('express-formidable');
@@ -27,8 +26,6 @@ router.options('/', function (req, res) {
     res.send();
 });
 router.post('/', function (req, res) {
-    console.log(JSON.stringify(req.files.photo));
-    console.log("FIELDS: ", req.fields);
     fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), gallery_js_1.folders[req.fields.pageNumInForm], req.files.photo.name), function () { });
     res.redirect('/gallery');
 });

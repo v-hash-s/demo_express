@@ -28,14 +28,11 @@ router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../static/pages/index.html'));
 });
 router.post('/', function (req, res) {
-    console.log("Body: " + JSON.stringify(req.body));
     if (req.body.email in exports.users && req.body.password === exports.users[req.body.email]) {
-        // process.env['isValid'] = "true";
         res.cookie('token', 'token');
         res.header("Authorization", 'token');
         res.header({ 'Access-Control-Allow-Origin': '*' });
         res.status(200);
-        // res.header( {'Authorization' : token})
         res.send(JSON.stringify(exports.token));
     }
     else {
@@ -43,5 +40,4 @@ router.post('/', function (req, res) {
         res.send({ errorMessage: 'Invalid email or password' });
     }
 });
-// other.ts
 module.exports = router;
