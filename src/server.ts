@@ -44,9 +44,11 @@ console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'
 
 const loginRouter = require('./loginRouter.js')
 const galleryRouter = require('./galleryRouter.js')
+const uploadRouter = require('./uploadRouter.js')
 
 app.use('/', loginRouter)
 app.use('/gallery', galleryRouter)
+app.use('/upload', uploadRouter)
 
 // app.get('/', (req: Request, res: Response) => {
 //     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
@@ -99,14 +101,14 @@ app.use('/gallery', galleryRouter)
 
 console.log(destination);
 
-app.post('/upload', async (req: any, res: any) => {
-    console.log(JSON.stringify(req.files.photo));
-    console.log(req.fields);
+// app.post('/upload', async (req: any, res: any) => {
+//     console.log(JSON.stringify(req.files.photo));
+//     console.log(req.fields);
 
-    fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), folders[req.fields.pageNumInForm], req.files.photo.name), () => { });
+//     fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), folders[req.fields.pageNumInForm], req.files.photo.name), () => { });
 
-    res.redirect('/gallery');
-})
+//     res.redirect('/gallery');
+// })
 
 
 
