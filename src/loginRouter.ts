@@ -19,8 +19,6 @@ export const users: UsersDB = {
 
 app.use(express.static(path.join(__dirname, '../static/pages')))
 
-
-
 router.options('/', (req: Request, res: Response) => {
     
     res.header({'Access-Control-Allow-Origin': '*' });
@@ -41,20 +39,16 @@ router.get('/', function(req: Request, res: Response){
  router.post('/', function(req: Request, res: Response){
     console.log("Body: " + JSON.stringify(req.body))
     if (req.body.email in users && req.body.password === users[req.body.email]){
-        // process.env['isValid'] = "true";
         res.cookie('token', 'token')
         res.header("Authorization", 'token')
         res.header( {'Access-Control-Allow-Origin': '*'} );
         res.status(200);
-        // res.header( {'Authorization' : token})
         res.send(JSON.stringify(token))
     } else {
         res.status(401);
         res.send({ errorMessage: 'Invalid email or password'});
     }
  });
-  
-  // other.ts
 
  module.exports = router;
 

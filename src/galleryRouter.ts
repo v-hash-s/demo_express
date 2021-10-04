@@ -21,8 +21,6 @@ router.options('/', (req: Request, res: Response) => {
     res.header({ 'Access-Control-Allow-Methods': 'OPTIONS, GET, POST' });
     res.header({ 'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers' });
     res.header('Application-Type', 'multipart/form-data');
-    
-    
     res.send();
     
 })
@@ -46,12 +44,7 @@ router.get('/', async function(req: Request, res: Response){
             ejsData = { objects }
             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
         } else {
-            // console.log('NOT EMPRTY')
-            
-
-            // console.log(files)
             let photo = files;
-            // console.log(photo)
             ejsData = {objects, photo}
             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
         }

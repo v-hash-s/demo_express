@@ -3,11 +3,8 @@ import { basename, dirname } from "path/posix"
 import { GalleryResponse, ErrorMessage  } from "./interfaces"
 import * as util from 'util';
 
-// const fs = require('fs')
 import * as fs from 'fs'
-// const path = require('path')
 import * as path from 'path'
-// const querystring = require('querystring')
 import * as querystring from 'querystring'
 
 const readdir = util.promisify(fs.readdir);
@@ -33,7 +30,6 @@ export async function sendGalleryObject(pageNumber: any): Promise<GalleryRespons
             errorMessage: "Invalid page number"
         };
     }
-    // let dir = '../static/photos/' + folders[pageNumber];
     let dir = path.join(__dirname, '../static/photos', folders[pageNumber])
     console.log("Dir: " + dir)
     let files = await readdir(dir)
@@ -45,7 +41,6 @@ export async function sendGalleryObject(pageNumber: any): Promise<GalleryRespons
     console.log("Photos: " + photos)
 
     let galleryResponse: GalleryResponse = {
-        // objects: mappedArray(photos, pageNumber),
         objects: photos,
         page: pageNumber.toString(),
         total: 5
@@ -56,14 +51,14 @@ export async function sendGalleryObject(pageNumber: any): Promise<GalleryRespons
     return galleryResponse;
 }    
 
-function mappedArray(arr: Array<string>, pageNumber: number): Array<string>{
-    let newArr: Array<string> = []
+// function mappedArray(arr: Array<string>, pageNumber: number): Array<string>{
+//     let newArr: Array<string> = []
     
-    newArr = arr.map((img) => {
-        let dir = path.join(__dirname, '../static/photos')
-        console.log(img)
-        return path.join(dir, `${folders[pageNumber]}/`, img)
-    })
+//     newArr = arr.map((img) => {
+//         let dir = path.join(__dirname, '../static/photos')
+//         console.log(img)
+//         return path.join(dir, `${folders[pageNumber]}/`, img)
+//     })
 
-    return newArr;
-}
+//     return newArr;
+// }

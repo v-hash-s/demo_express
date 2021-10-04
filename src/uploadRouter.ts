@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 const fs = require('fs')
 let cookieParser = require('cookie-parser')
 app.use(cookieParser())
-// router.use(require('./auth'));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
