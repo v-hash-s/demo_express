@@ -68,8 +68,10 @@ var destination = path.join('../static/photos/uploads');
 app.use(express.static(destination));
 app.use('/static/photos/uploads', express.static('../static/photos/uploads'));
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'));
-var loginRoiter = require('./loginRouter.js');
-app.use('/', loginRoiter);
+var loginRouter = require('./loginRouter.js');
+var galleryRouter = require('./galleryRouter.js');
+app.use('/', loginRouter);
+app.use('/gallery', galleryRouter);
 // app.get('/', (req: Request, res: Response) => {
 //     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
 // })
@@ -85,40 +87,30 @@ app.use('/', loginRoiter);
 //         console.log('Not found')
 //     }
 // })
-app.get("/gallery", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var pageNumber, objects, ejsData, files;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                console.log(req.originalUrl);
-                pageNumber = req.query.page;
-                if (pageNumber == null) {
-                    pageNumber = "1";
-                }
-                return [4 /*yield*/, (0, gallery_1.sendGalleryObject)(pageNumber)];
-            case 1:
-                objects = _a.sent();
-                console.log("Objects: " + JSON.stringify(objects));
-                ejsData = {};
-                console.log("!!!!");
-                files = fs.readdir(destination, function (err, files) {
-                    if (files.length <= 0) {
-                        ejsData = { objects: objects };
-                        res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
-                    }
-                    else {
-                        console.log('NOT EMPRTY');
-                        console.log(files);
-                        var photo = files;
-                        console.log(photo);
-                        ejsData = { objects: objects, photo: photo };
-                        res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
-                    }
-                });
-                return [2 /*return*/];
-        }
-    });
-}); });
+// app.get(`/gallery`, async (req: Request, res: Response) => {
+//     console.log(req.originalUrl)
+//     let pageNumber = req.query.page;
+//     if (pageNumber == null) {
+//         pageNumber = "1";
+//     }
+//     let objects = await sendGalleryObject(pageNumber);
+//     console.log("Objects: " + JSON.stringify(objects))
+//     let ejsData = { }
+//     console.log("!!!!")
+//     let files = fs.readdir(destination, (err: any, files: any) => {
+//         if(files.length <= 0){
+//             ejsData = { objects }
+//             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
+//         } else {
+//             console.log('NOT EMPRTY')
+//             console.log(files)
+//             let photo = files;
+//             console.log(photo)
+//             ejsData = {objects, photo}
+//             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
+//         }
+//     })
+// })
 console.log(destination);
 app.post('/upload', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
