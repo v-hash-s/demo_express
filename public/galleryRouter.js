@@ -46,12 +46,25 @@ var destination = path.join('../static/photos/uploads');
 app.use(express.static(destination));
 app.use('/static/photos/uploads', express.static('../static/photos/uploads'));
 app.set("view engine", "ejs");
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+// import { isValid } from './loginRouter'
+router.use(require('./auth'));
+router.options('/', function (req, res) {
+    res.header({ 'Access-Control-Allow-Origin': '*' });
+    res.header({ 'Access-Control-Allow-Credentials': 'true' });
+    res.header({ 'Access-Control-Allow-Methods': 'OPTIONS, GET, POST' });
+    res.header({ 'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers' });
+    res.header('Application-Type', 'multipart/form-data');
+    res.send();
+});
 router.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var pageNumber, objects, ejsData, files;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log(req.headers);
                     console.log(req.originalUrl);
                     pageNumber = req.query.page;
                     if (pageNumber == null) {
@@ -69,10 +82,10 @@ router.get('/', function (req, res) {
                             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
                         }
                         else {
-                            console.log('NOT EMPRTY');
-                            console.log(files);
+                            // console.log('NOT EMPRTY')
+                            // console.log(files)
                             var photo = files;
-                            console.log(photo);
+                            // console.log(photo)
                             ejsData = { objects: objects, photo: photo };
                             res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
                         }

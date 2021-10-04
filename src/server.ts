@@ -40,15 +40,24 @@ app.use(express.static(path.join(__dirname, '../static/photos/fifth_page')))
 app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'))
-
+let cookieParser = require('cookie-parser')
+app.use(cookieParser())
 
 const loginRouter = require('./loginRouter.js')
 const galleryRouter = require('./galleryRouter.js')
 const uploadRouter = require('./uploadRouter.js')
+const loginApi = require('./loginApi')
 
 app.use('/', loginRouter)
 app.use('/gallery', galleryRouter)
 app.use('/upload', uploadRouter)
+app.use('/api-login', loginApi)
+
+app.all('*', (req: Request, res: Response) => {
+    res.writeHead(404);
+    res.end('Not Found');
+    res.send(`Page ${req.url} not found`);
+  });
 
 // app.get('/', (req: Request, res: Response) => {
 //     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
@@ -98,8 +107,6 @@ app.use('/upload', uploadRouter)
 //         }
 //     })
 // })
-
-console.log(destination);
 
 // app.post('/upload', async (req: any, res: any) => {
 //     console.log(JSON.stringify(req.files.photo));

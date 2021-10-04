@@ -14,23 +14,24 @@
         <input type="file" name="photo">
         <input type="submit" value="Submit">
         <input type="hidden" value="" id="pageNumInForm" name="pageNumInForm">
+        <!-- <input type="hidden" value="token" name="token"> -->
     </form>
 
 
     <% if(ejsData.photo && ejsData.objects){ %>
 
         <% ejsData.photo.forEach(function (photo) { %>
-            <img src='<%= photo %>' height='200' width='200'/>
+            <img src='<%= photo %>' height='200' width='200' style="object-fit: cover"/>
       <% }) %>
 
        
         <% ejsData.objects.objects.forEach(function (object) { %>
-               <img src='<%= object %>' height='200' width='200'/>
+               <img src='<%= object %>' height='200' width='200' style="object-fit: cover"/>
          <% }) %>
         <% }  else {%>
 
             <% ejsData.objects.objects.forEach(function (object) { %>
-                <img src='<%= object %>' height='200' width='200'/>
+                <img src='<%= object %>' height='200' width='200' style="object-fit: cover"/>
             <% }) %>
             
             <% } %>

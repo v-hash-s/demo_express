@@ -31,12 +31,21 @@ var destination = path.join('../static/photos/uploads');
 app.use(express.static(destination));
 app.use('/static/photos/uploads', express.static('../static/photos/uploads'));
 console.log("Static path: " + path.join(__dirname, '../static/photos/fifth_page'));
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 var loginRouter = require('./loginRouter.js');
 var galleryRouter = require('./galleryRouter.js');
 var uploadRouter = require('./uploadRouter.js');
+var loginApi = require('./loginApi');
 app.use('/', loginRouter);
 app.use('/gallery', galleryRouter);
 app.use('/upload', uploadRouter);
+app.use('/api-login', loginApi);
+app.all('*', function (req, res) {
+    res.writeHead(404);
+    res.end('Not Found');
+    res.send("Page " + req.url + " not found");
+});
 // app.get('/', (req: Request, res: Response) => {
 //     res.sendFile(path.join(__dirname, '../static/pages/index.html'))
 // })
@@ -76,7 +85,6 @@ app.use('/upload', uploadRouter);
 //         }
 //     })
 // })
-console.log(destination);
 // app.post('/upload', async (req: any, res: any) => {
 //     console.log(JSON.stringify(req.files.photo));
 //     console.log(req.fields);

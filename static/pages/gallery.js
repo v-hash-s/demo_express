@@ -45,6 +45,11 @@ const btnNext = document.getElementById('next');
 
 
 async function createGalleryPage(pageNumber) {
+    
+
+    let answer = await response.json()
+    console.log(answer)
+    // console.log(response)
     try {
         checkTime();
         updateLocation();
@@ -65,7 +70,7 @@ async function createGalleryPage(pageNumber) {
 //         alert(err.message);
 //     }
 // }
-function checkTime() {
+async function checkTime() {
     let timeNow = new Date();
     if (timeNow.getUTCMinutes() - Number(localStorage.getItem('time')) >= 10) {
         localStorage.removeItem('token');
