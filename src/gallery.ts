@@ -12,7 +12,7 @@ import * as querystring from 'querystring'
 
 const readdir = util.promisify(fs.readdir);
 
-enum folders {
+export enum folders {
     first_page = 1,
     second_page,
     third_page,
@@ -35,14 +35,14 @@ export async function sendGalleryObject(pageNumber: any): Promise<GalleryRespons
     }
     // let dir = '../static/photos/' + folders[pageNumber];
     let dir = path.join(__dirname, '../static/photos', folders[pageNumber])
-    // console.log("Dir: " + dir)
+    console.log("Dir: " + dir)
     let files = await readdir(dir)
 
     files.forEach((file: any) => {
         photos.push(file)
     });
 
-    // console.log("Photos: " + photos)
+    console.log("Photos: " + photos)
 
     let galleryResponse: GalleryResponse = {
         // objects: mappedArray(photos, pageNumber),
@@ -51,7 +51,7 @@ export async function sendGalleryObject(pageNumber: any): Promise<GalleryRespons
         total: 5
     }
 
-    // console.log(galleryResponse)
+    console.log(galleryResponse)
 
     return galleryResponse;
 }    
@@ -61,7 +61,7 @@ function mappedArray(arr: Array<string>, pageNumber: number): Array<string>{
     
     newArr = arr.map((img) => {
         let dir = path.join(__dirname, '../static/photos')
-        // console.log(img)
+        console.log(img)
         return path.join(dir, `${folders[pageNumber]}/`, img)
     })
 

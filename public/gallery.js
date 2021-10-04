@@ -55,7 +55,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendGalleryObject = void 0;
+exports.sendGalleryObject = exports.folders = void 0;
 var util = __importStar(require("util"));
 // const fs = require('fs')
 var fs = __importStar(require("fs"));
@@ -69,7 +69,7 @@ var folders;
     folders[folders["third_page"] = 3] = "third_page";
     folders[folders["fourth_page"] = 4] = "fourth_page";
     folders[folders["fifth_page"] = 5] = "fifth_page";
-})(folders || (folders = {}));
+})(folders = exports.folders || (exports.folders = {}));
 var photos = [];
 function sendGalleryObject(pageNumber) {
     return __awaiter(this, void 0, void 0, function () {
@@ -85,19 +85,21 @@ function sendGalleryObject(pageNumber) {
                             }];
                     }
                     dir = path.join(__dirname, '../static/photos', folders[pageNumber]);
+                    console.log("Dir: " + dir);
                     return [4 /*yield*/, readdir(dir)];
                 case 1:
                     files = _a.sent();
                     files.forEach(function (file) {
                         photos.push(file);
                     });
+                    console.log("Photos: " + photos);
                     galleryResponse = {
                         // objects: mappedArray(photos, pageNumber),
                         objects: photos,
                         page: pageNumber.toString(),
                         total: 5
                     };
-                    // console.log(galleryResponse)
+                    console.log(galleryResponse);
                     return [2 /*return*/, galleryResponse];
             }
         });
@@ -108,7 +110,7 @@ function mappedArray(arr, pageNumber) {
     var newArr = [];
     newArr = arr.map(function (img) {
         var dir = path.join(__dirname, '../static/photos');
-        // console.log(img)
+        console.log(img);
         return path.join(dir, folders[pageNumber] + "/", img);
     });
     return newArr;

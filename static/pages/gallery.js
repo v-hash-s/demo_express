@@ -1,7 +1,4 @@
 "use strict";
-
-// const { format } = require("path/posix");
-
 //const galleryUrl: URL = new URL('api/gallery'); 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -11,6 +8,7 @@ let pageNumber;
 if (location.search.match(pageSearch)) {
     localStorage.setItem('page', params.page);
     pageNumber = localStorage.getItem('page');
+    document.getElementById("pageNumInForm").value = pageNumber;
 }
 else if (localStorage.getItem('page')) {
     pageNumber = localStorage.getItem('page');
@@ -123,22 +121,4 @@ function previousPage(pageNumber) {
     localStorage.setItem('page', pageNumber);
     console.log(pageNumber);
     return pageNumber;
-}
-
-form.addEventListener('submit', submitForm)
-
-function submitForm(e){
-    e.preventDefault()
-    // const photo = document.getElementById('photo')
-    // const photo = document.getElementById('photo')
-    const data = {pageNumber: pageNumber}
-    console.log(data)
-    fetch(`http://localhost:8080/gallery?page=${pageNumber}`, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(data)
-    })
-    e.stopPropagation()
 }
