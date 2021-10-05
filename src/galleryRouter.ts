@@ -11,7 +11,6 @@ const fs = require('fs')
 app.set("view engine", "ejs");
 let cookieParser = require('cookie-parser')
 app.use(cookieParser())
-// import { isValid } from './loginRouter'
 router.use(require('./auth'));
 
 router.options('/', (req: Request, res: Response) => {

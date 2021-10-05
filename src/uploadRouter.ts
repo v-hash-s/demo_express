@@ -35,7 +35,6 @@ router.options('/', (req: Request, res: Response) => {
 
 
 router.post('/', function (req: any, res: any) {
-    //console.log(JSON.stringify(req.files.photo.size));
 
     if (req.files.photo.size != '0') {
         fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), folders[req.fields.pageNumInForm], req.files.photo.name), () => { });

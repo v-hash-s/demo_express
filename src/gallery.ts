@@ -50,15 +50,3 @@ export async function sendGalleryObject(pageNumber: any): Promise<GalleryRespons
 
     return galleryResponse;
 }    
-
-// function mappedArray(arr: Array<string>, pageNumber: number): Array<string>{
-//     let newArr: Array<string> = []
-    
-//     newArr = arr.map((img) => {
-//         let dir = path.join(__dirname, '../static/photos')
-//         console.log(img)
-//         return path.join(dir, `${folders[pageNumber]}/`, img)
-//     })
-
-//     return newArr;
-// }
