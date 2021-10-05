@@ -42,12 +42,10 @@ app.use(cookieParser())
 const loginRouter = require('./loginRouter.js')
 const galleryRouter = require('./galleryRouter.js')
 const uploadRouter = require('./uploadRouter.js')
-const loginApi = require('./loginApi')
 
 app.use('/', loginRouter)
 app.use('/gallery', galleryRouter)
 app.use('/upload', uploadRouter)
-app.use('/api-login', loginApi)
 
 app.all('*', (req: Request, res: Response) => {
   res.status(404).end(`Page ${req.url} not found`);

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsc; cd public; node server.js"
+    "start": "tsc; cd public; node server.js"
   },
   "keywords": [],
   "author": "",
