@@ -50,10 +50,8 @@ app.use('/upload', uploadRouter)
 app.use('/api-login', loginApi)
 
 app.all('*', (req: Request, res: Response) => {
-    res.writeHead(404);
-    res.end('Not Found');
-    res.send(`Page ${req.url} not found`);
+  res.status(404).end(`Page ${req.url} not found`);
+    
   });
 
 app.listen(8080, () => console.log('At 8080 port...'))
-

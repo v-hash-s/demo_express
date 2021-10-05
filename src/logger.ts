@@ -12,9 +12,9 @@ const log = logger.createSimpleFileLogger(options);
 
 const loggerFunction =  (req: Request, res: Response, next: Function) => {
 
-    log.info(`REQUEST URL : ${JSON.stringify(req.url)}`);
-    log.info(`REQUEST METHOD : ${JSON.stringify(req.method)}`);
-    log.info(`REQUEST HEADERS :\n`);
+    log.info(`Request URL : ${JSON.stringify(req.url)}`);
+    log.info(`Request method : ${JSON.stringify(req.method)}`);
+    log.info(`Request header :\n`);
     for(let key in  req.headers) {
         log.info(`${key} : ${req.headers[key]}`);
     }

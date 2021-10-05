@@ -26,7 +26,14 @@ router.options('/', function (req, res) {
     res.send();
 });
 router.post('/', function (req, res) {
-    fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), gallery_js_1.folders[req.fields.pageNumInForm], req.files.photo.name), function () { });
-    res.redirect('/gallery');
+    //console.log(JSON.stringify(req.files.photo.size));
+    if (req.files.photo.size != '0') {
+        fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), gallery_js_1.folders[req.fields.pageNumInForm], req.files.photo.name), function () { });
+    }
+    else {
+        fs.unlink(req.files.photo.path, function () { });
+    }
+    res.status(302);
+    res.redirect('/gallery' + '?page=' + req.fields.pageNumInForm);
 });
 module.exports = router;

@@ -42,9 +42,9 @@ var path = require('path');
 var app = express();
 var gallery_1 = require("./gallery");
 var fs = require('fs');
-var destination = path.join('../static/photos/uploads');
-app.use(express.static(destination));
-app.use('/static/photos/uploads', express.static('../static/photos/uploads'));
+//const destination = path.join('../static/photos/uploads');
+//app.use(express.static(destination))
+//app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 app.set("view engine", "ejs");
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -60,29 +60,20 @@ router.options('/', function (req, res) {
 });
 router.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var pageNumber, objects, ejsData, files;
+        var pageNumber, objects, ejsData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     pageNumber = req.query.page;
                     if (pageNumber == null) {
-                        pageNumber = "1";
+                        res.redirect("/gallery?page=1");
                     }
                     return [4 /*yield*/, (0, gallery_1.sendGalleryObject)(pageNumber)];
                 case 1:
                     objects = _a.sent();
                     ejsData = {};
-                    files = fs.readdir(destination, function (err, files) {
-                        if (files.length <= 0) {
-                            ejsData = { objects: objects };
-                            res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
-                        }
-                        else {
-                            var photo = files;
-                            ejsData = { objects: objects, photo: photo };
-                            res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
-                        }
-                    });
+                    ejsData = { objects: objects };
+                    res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData: ejsData });
                     return [2 /*return*/];
             }
         });

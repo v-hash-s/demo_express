@@ -8,9 +8,9 @@ var options = {
 };
 var log = logger.createSimpleFileLogger(options);
 var loggerFunction = function (req, res, next) {
-    log.info("REQUEST URL : " + JSON.stringify(req.url));
-    log.info("REQUEST METHOD : " + JSON.stringify(req.method));
-    log.info("REQUEST HEADERS :\n");
+    log.info("Request URL : " + JSON.stringify(req.url));
+    log.info("Request method : " + JSON.stringify(req.method));
+    log.info("Request header :\n");
     for (var key in req.headers) {
         log.info(key + " : " + req.headers[key]);
     }

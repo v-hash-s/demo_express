@@ -35,8 +35,6 @@ app.use('/gallery', galleryRouter);
 app.use('/upload', uploadRouter);
 app.use('/api-login', loginApi);
 app.all('*', function (req, res) {
-    res.writeHead(404);
-    res.end('Not Found');
-    res.send("Page " + req.url + " not found");
+    res.status(404).end("Page " + req.url + " not found");
 });
 app.listen(8080, function () { return console.log('At 8080 port...'); });

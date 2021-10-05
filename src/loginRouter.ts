@@ -50,4 +50,3 @@ router.get('/', function(req: Request, res: Response){
  });
 
  module.exports = router;
-

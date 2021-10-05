@@ -15,7 +15,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 const formidableMiddleware = require('express-formidable');
 app.use('/upload', formidableMiddleware({
-    
     keepExtensions: true,
     uploadDir: path.resolve("../static/photos/uploads")
 }));
@@ -35,13 +34,16 @@ router.options('/', (req: Request, res: Response) => {
 })
 
 
-router.post('/', function(req: any, res: any){
+router.post('/', function (req: any, res: any) {
+    //console.log(JSON.stringify(req.files.photo.size));
 
-    fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), folders[req.fields.pageNumInForm], req.files.photo.name), () => { });
-
-    res.redirect('/gallery');
-    
-
+    if (req.files.photo.size != '0') {
+        fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), folders[req.fields.pageNumInForm], req.files.photo.name), () => { });
+    } else {
+        fs.unlink(req.files.photo.path, () => { });
+    }
+    res.status(302);
+    res.redirect('/gallery' + '?page=' + req.fields.pageNumInForm);
  });
 
 

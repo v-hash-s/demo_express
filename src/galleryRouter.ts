@@ -5,9 +5,9 @@ const path = require('path')
 const app = express()
 import { sendGalleryObject, folders } from "./gallery";
 const fs = require('fs')
-const destination = path.join('../static/photos/uploads');
-app.use(express.static(destination))
-app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
+//const destination = path.join('../static/photos/uploads');
+//app.use(express.static(destination))
+//app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 app.set("view engine", "ejs");
 let cookieParser = require('cookie-parser')
 app.use(cookieParser())
@@ -28,22 +28,12 @@ router.options('/', (req: Request, res: Response) => {
 router.get('/', async function(req: Request, res: Response){
     let pageNumber = req.query.page;
     if (pageNumber == null) {
-        pageNumber = "1";
+        res.redirect("/gallery?page=1")
     }
-
-   
     let objects = await sendGalleryObject(pageNumber);
-    let ejsData = { }
-    let files = fs.readdir(destination, (err: any, files: any) => {
-        if(files.length <= 0){
-            ejsData = { objects }
-            res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
-        } else {
-            let photo = files;
-            ejsData = {objects, photo}
-            res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
-        }
-    })
+    let ejsData = {}
+    ejsData = { objects };
+    res.render((path.join(__dirname, '../static/pages/gallery.ejs')), { ejsData })
  });
 
 
