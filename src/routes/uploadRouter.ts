@@ -1,24 +1,11 @@
 import { folders } from '../appLogic/gallery.js'
 import e, { Request, Response } from "express"
+import { uploadImg } from '../appLogic/upload'
+
 const express = require('express');
-
-
 const router = express.Router();
-const path = require('path')
-const app = express()
-const bodyParser = require('body-parser');
-const fs = require('fs')
-let cookieParser = require('cookie-parser')
-app.use(cookieParser())
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
-const formidableMiddleware = require('express-formidable');
-app.use('/upload', formidableMiddleware({
-    keepExtensions: true,
-    uploadDir: path.resolve("../static/photos/uploads")
-}));
-
+router.use(require('../middlewares/uploadMiddleware'))
 router.use(require('./auth'));
 
 router.options('/', (req: Request, res: Response) => {
@@ -27,17 +14,11 @@ router.options('/', (req: Request, res: Response) => {
     
 })
 
-
 router.post('/', function (req: any, res: any) {
 
-    if (req.files.photo.size != '0') {
-        fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), folders[req.fields.pageNumInForm], req.files.photo.name), () => { });
-    } else {
-        fs.unlink(req.files.photo.path, () => { });
-    }
+    uploadImg(req, res);
     res.status(302);
     res.redirect('/gallery' + '?page=' + req.fields.pageNumInForm);
  });
-
 
 module.exports = router;
