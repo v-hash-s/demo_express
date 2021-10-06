@@ -1,8 +1,8 @@
 import { folders } from '../appLogic/gallery.js'
-import e, { Request, Response } from "express"
+import { Request, Response } from "express"
 import { uploadImg } from '../appLogic/upload'
 
-const express = require('express');
+import * as express from 'express'
 const router = express.Router();
 
 router.use(require('../middlewares/uploadMiddleware'))
@@ -21,4 +21,4 @@ router.post('/', function (req: any, res: any) {
     res.redirect('/gallery' + '?page=' + req.fields.pageNumInForm);
  });
 
-module.exports = router;
+export default router

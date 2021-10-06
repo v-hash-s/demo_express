@@ -25,4 +25,4 @@ function loggerFunction(reqOrMsg: Request | string, res?: Response, next?: NextF
     }
 }
 
-module.exports = loggerFunction;
+export default loggerFunction

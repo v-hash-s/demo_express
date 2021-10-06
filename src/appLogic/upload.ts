@@ -1,8 +1,9 @@
-const fs = require('fs')
+import * as fs from 'fs'
 import { folders } from '../appLogic/gallery.js'
-const express = require('express');
+import * as express from 'express'
+import * as path from 'path'
+
 const app = express()
-const path = require('path')
 
 
 export function uploadImg(req: any, res: any){

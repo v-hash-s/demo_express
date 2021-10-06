@@ -1,13 +1,15 @@
-import e, { Request, Response } from "express"
-const express = require('express')
+import { Request, Response } from "express"
+import * as express from 'express'
 const app = express()
-const formidableMiddleware = require('express-formidable');
-const path = require('path')
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const cors = require('cors')
+import * as formidableMiddleware from 'express-formidable'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as bodyParser from 'body-parser'
+import * as cors from 'cors'
+import * as cookieParser from 'cookie-parser'
 
-const logger = require('./logger');
+import logger from "./logger"
+// const logger = require('./logger');
 app.use(cors({
   origin: '*'
 }))
@@ -35,12 +37,15 @@ app.use(express.static(destination))
 app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 
 
-let cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
-const loginRouter = require('./loginRouter.js')
-const galleryRouter = require('./galleryRouter.js')
-const uploadRouter = require('./uploadRouter.js')
+import loginRouter from './routes/loginRouter'
+import galleryRouter from './routes/galleryRouter'
+import uploadRouter from './routes/uploadRouter'
+
+// const loginRouter = require('./loginRouter.js')
+// const galleryRouter = require('./galleryRouter.js')
+// const uploadRouter = require('./uploadRouter.js')
 
 app.use('/', loginRouter)
 app.use('/gallery', galleryRouter)
