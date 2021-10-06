@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
     if ((0, login_1.isValidUser)(req)) {
         res.cookie('token', 'token');
         res.status(200);
-        res.send(login_1.sendToken);
+        res.send((0, login_1.sendToken)());
     }
     else {
         res.status(401);

@@ -38,7 +38,7 @@ router.get('/', function(req: Request, res: Response){
     if (isValidUser(req)){
         res.cookie('token', 'token')
         res.status(200);
-        res.send(sendToken)
+        res.send(sendToken())
     } else {
         res.status(401);
         res.send({ errorMessage: 'Invalid email or password'});
