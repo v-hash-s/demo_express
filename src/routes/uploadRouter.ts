@@ -21,4 +21,4 @@ router.post('/', function (req: any, res: any) {
     res.redirect('/gallery' + '?page=' + req.fields.pageNumInForm);
  });
 
-module.exports = router;
+export default router

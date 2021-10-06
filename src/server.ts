@@ -8,8 +8,8 @@ import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
 import * as cookieParser from 'cookie-parser'
 
-
-const logger = require('./logger');
+import logger from "./logger"
+// const logger = require('./logger');
 app.use(cors({
   origin: '*'
 }))
@@ -39,9 +39,13 @@ app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 
 app.use(cookieParser())
 
-const loginRouter = require('./loginRouter.js')
-const galleryRouter = require('./galleryRouter.js')
-const uploadRouter = require('./uploadRouter.js')
+import loginRouter from './routes/loginRouter'
+import galleryRouter from './routes/galleryRouter'
+import uploadRouter from './routes/uploadRouter'
+
+// const loginRouter = require('./loginRouter.js')
+// const galleryRouter = require('./galleryRouter.js')
+// const uploadRouter = require('./uploadRouter.js')
 
 app.use('/', loginRouter)
 app.use('/gallery', galleryRouter)
