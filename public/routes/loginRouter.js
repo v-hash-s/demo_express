@@ -5,8 +5,10 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var app = express();
-var cookieParser = require('cookie-parser');
-app.use(cookieParser());
+var login_1 = require("../appLogic/login");
+// let cookieParser = require('cookie-parser')
+// app.use(cookieParser())
+router.use(require('../middlewares/loginMiddleware'));
 exports.token = {
     'token': 'token',
 };
@@ -15,7 +17,7 @@ exports.users = {
     'vkotikov@flo.team': 'po3FGas8',
     'tpupkin@flo.team': 'tpupkin@flo.team',
 };
-app.use(express.static(path.join(__dirname, '../static/pages')));
+// app.use(express.static(path.join(__dirname, '../static/pages')))
 router.options('/', function (req, res) {
     res.header('Application-Type', 'multipart/form-data');
     res.send();
@@ -24,12 +26,10 @@ router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../static/pages/index.html'));
 });
 router.post('/', function (req, res) {
-    if (req.body.email in exports.users && req.body.password === exports.users[req.body.email]) {
+    if ((0, login_1.isValidUser)(req)) {
         res.cookie('token', 'token');
-        res.header("Authorization", 'token');
-        res.header({ 'Access-Control-Allow-Origin': '*' });
         res.status(200);
-        res.send(JSON.stringify(exports.token));
+        res.send(login_1.sendToken);
     }
     else {
         res.status(401);

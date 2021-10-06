@@ -4,8 +4,10 @@ import e, { Request, Response } from "express"
 const router = express.Router();
 const path = require('path')
 const app = express()
-let cookieParser = require('cookie-parser')
-app.use(cookieParser())
+import { isValidUser, sendToken } from '../appLogic/login'
+// let cookieParser = require('cookie-parser')
+// app.use(cookieParser())
+router.use(require('../middlewares/loginMiddleware'))
 
 export const token: Token = {
     'token': 'token',
@@ -17,7 +19,7 @@ export const users: UsersDB = {
     'tpupkin@flo.team': 'tpupkin@flo.team',
 }
 
-app.use(express.static(path.join(__dirname, '../static/pages')))
+// app.use(express.static(path.join(__dirname, '../static/pages')))
 
 router.options('/', (req: Request, res: Response) => {
 
@@ -33,12 +35,10 @@ router.get('/', function(req: Request, res: Response){
 
 
  router.post('/', function(req: Request, res: Response){
-    if (req.body.email in users && req.body.password === users[req.body.email]){
+    if (isValidUser(req)){
         res.cookie('token', 'token')
-        res.header("Authorization", 'token')
-        res.header( {'Access-Control-Allow-Origin': '*'} );
         res.status(200);
-        res.send(JSON.stringify(token))
+        res.send(sendToken)
     } else {
         res.status(401);
         res.send({ errorMessage: 'Invalid email or password'});
