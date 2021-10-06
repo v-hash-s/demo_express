@@ -3,7 +3,7 @@ import e, { Request, Response } from "express"
 const router = express.Router();
 const path = require('path')
 const app = express()
-import { sendGalleryObject, folders } from "./gallery";
+import { sendGalleryObject, folders } from "../appLogic/gallery";
 const fs = require('fs')
 //const destination = path.join('../static/photos/uploads');
 //app.use(express.static(destination))

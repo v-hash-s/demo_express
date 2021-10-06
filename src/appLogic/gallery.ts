@@ -1,6 +1,6 @@
 import { IncomingMessage } from "http"
 import { basename, dirname } from "path/posix"
-import { GalleryResponse, ErrorMessage  } from "./interfaces"
+import { GalleryResponse, ErrorMessage  } from "../interfaces"
 import * as util from 'util';
 
 import * as fs from 'fs'

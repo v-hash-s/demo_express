@@ -1,4 +1,4 @@
-import { folders } from './gallery.js'
+import { folders } from '../appLogic/gallery.js'
 import e, { Request, Response } from "express"
 const express = require('express');
 

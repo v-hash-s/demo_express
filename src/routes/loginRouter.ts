@@ -1,4 +1,4 @@
-import { UsersDB, Token, ErrorMessage } from "./interfaces"
+import { UsersDB, Token, ErrorMessage } from "../interfaces"
 const express = require('express');
 import e, { Request, Response } from "express"
 const router = express.Router();
