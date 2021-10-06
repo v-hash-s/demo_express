@@ -14,11 +14,7 @@ app.use(cookieParser())
 router.use(require('./auth'));
 
 router.options('/', (req: Request, res: Response) => {
-    
-    res.header({'Access-Control-Allow-Origin': '*' });
-    res.header({ 'Access-Control-Allow-Credentials': 'true' });
-    res.header({ 'Access-Control-Allow-Methods': 'OPTIONS, GET, POST' });
-    res.header({ 'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers' });
+
     res.header('Application-Type', 'multipart/form-data');
     res.send();
     

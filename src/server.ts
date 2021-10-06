@@ -9,9 +9,13 @@ const formidableMiddleware = require('express-formidable');
 const path = require('path')
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 
 const logger = require('./logger');
+app.use(cors({
+  origin: '*'
+}))
 
 app.use(express.json(), logger);
 
