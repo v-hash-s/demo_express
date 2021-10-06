@@ -5,6 +5,7 @@ var fs = require('fs');
 var gallery_js_1 = require("../appLogic/gallery.js");
 var express = require('express');
 var app = express();
+var path = require('path');
 function uploadImg(req, res) {
     if (req.files.photo.size != '0') {
         fs.rename(req.files.photo.path, path.join(path.resolve("../static/photos"), gallery_js_1.folders[req.fields.pageNumInForm], req.files.photo.name), function () { });

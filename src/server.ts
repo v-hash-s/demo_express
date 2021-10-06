@@ -1,8 +1,4 @@
-import { UsersDB, Token, ErrorMessage } from "./interfaces"
 import e, { Request, Response } from "express"
-import { runInNewContext } from "vm";
-import { sendGalleryObject, folders } from "./appLogic/gallery";
-import { Console } from "console";
 const express = require('express')
 const app = express()
 const formidableMiddleware = require('express-formidable');
@@ -10,7 +6,6 @@ const path = require('path')
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const cors = require('cors')
-
 
 const logger = require('./logger');
 app.use(cors({

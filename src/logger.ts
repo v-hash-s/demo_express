@@ -1,28 +1,28 @@
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
+import * as log from 'simple-node-logger'
+import {Logger} from "simple-node-logger";
 
-const path = require('path');
+let logInfo: Logger = log.createRollingFileLogger({
+    errorEventName: 'error',
+    logDirectory: '../logs',
+    fileNamePattern: 'logFile-<DATE>.log',
+    dateFormat: 'DD-MM-YYYY HH',
+    timestampFormat: 'DD-MM-YYYY HH:mm:ss.SSS'
+});
 
-const logger = require('simple-node-logger');
-const options = {
-    logFilePath: path.join(__dirname, '../logs/logger.log'),
-    timestampFormat: 'DD-MM-YYYY HH:mm:ss.SSS',
-}
-
-const log = logger.createSimpleFileLogger(options);
-
-const loggerFunction =  (req: Request, res: Response, next: Function) => {
-
-    log.info(`Request URL : ${JSON.stringify(req.url)}`);
-    log.info(`Request method : ${JSON.stringify(req.method)}`);
-    log.info(`Request header :\n`);
-    for(let key in  req.headers) {
-        log.info(`${key} : ${req.headers[key]}`);
+function loggerFunction(reqOrMsg: Request | string, res?: Response, next?: NextFunction): void {
+    if (typeof reqOrMsg === 'string') {
+        logInfo.info(`Ответ сервера: ${reqOrMsg}`);
+    } else {
+        logInfo.info(`Запрос на сервер: Method - ${reqOrMsg.method}; 
+        URL - ${reqOrMsg.url}; 
+        Body - ${JSON.stringify(reqOrMsg.body)}; 
+        Headers - ${JSON.stringify(reqOrMsg.headers)}`);
     }
 
-    log.info(`REQUEST BODY : ${JSON.stringify(req.body)}`);
-    log.info('-------------------------------------------------');
-    log.info('');
-    next();
-};
+    if (next) {
+        next();
+    }
+}
 
 module.exports = loggerFunction;

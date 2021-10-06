@@ -2,7 +2,7 @@ const fs = require('fs')
 import { folders } from '../appLogic/gallery.js'
 const express = require('express');
 const app = express()
-
+const path = require('path')
 
 
 export function uploadImg(req: any, res: any){
