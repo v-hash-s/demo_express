@@ -1,11 +1,13 @@
-import e, { Request, Response } from "express"
-const express = require('express')
+import { Request, Response } from "express"
+import * as express from 'express'
 const app = express()
-const formidableMiddleware = require('express-formidable');
-const path = require('path')
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const cors = require('cors')
+import * as formidableMiddleware from 'express-formidable'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as bodyParser from 'body-parser'
+import * as cors from 'cors'
+import * as cookieParser from 'cookie-parser'
+
 
 const logger = require('./logger');
 app.use(cors({
@@ -35,7 +37,6 @@ app.use(express.static(destination))
 app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 
 
-let cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
 const loginRouter = require('./loginRouter.js')

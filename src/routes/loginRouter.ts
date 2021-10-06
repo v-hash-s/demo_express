@@ -1,9 +1,17 @@
-import { UsersDB, Token, ErrorMessage } from "../interfaces"
-const express = require('express');
-import e, { Request, Response } from "express"
-const router = express.Router();
-const path = require('path')
+import { Request, Response } from "express"
+import * as express from 'express'
 const app = express()
+import * as formidableMiddleware from 'express-formidable'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as bodyParser from 'body-parser'
+import * as cors from 'cors'
+import * as cookieParser from 'cookie-parser'
+
+
+
+import { UsersDB, Token, ErrorMessage } from "../interfaces"
+const router = express.Router();
 import { isValidUser, sendToken } from '../appLogic/login'
 // let cookieParser = require('cookie-parser')
 // app.use(cookieParser())

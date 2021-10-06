@@ -1,15 +1,16 @@
-const express = require('express');
-import e, { Request, Response } from "express"
+import { Request, Response } from "express"
+import * as express from 'express'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as bodyParser from 'body-parser'
+import * as cors from 'cors'
+import * as cookieParser from 'cookie-parser'
+
+
 const router = express.Router();
-const path = require('path')
 const app = express()
 import { sendGalleryObject, folders } from "../appLogic/gallery";
-const fs = require('fs')
-//const destination = path.join('../static/photos/uploads');
-//app.use(express.static(destination))
-//app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 app.set("view engine", "ejs");
-let cookieParser = require('cookie-parser')
 app.use(cookieParser())
 router.use(require('./auth'));
 

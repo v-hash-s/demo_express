@@ -1,8 +1,8 @@
 import { folders } from '../appLogic/gallery.js'
-import e, { Request, Response } from "express"
+import { Request, Response } from "express"
 import { uploadImg } from '../appLogic/upload'
 
-const express = require('express');
+import * as express from 'express'
 const router = express.Router();
 
 router.use(require('../middlewares/uploadMiddleware'))
