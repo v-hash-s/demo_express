@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.users = exports.token = void 0;
-var express = require('express');
-var router = express.Router();
-var path = require('path');
+var express = require("express");
 var app = express();
+var path = require("path");
+var router = express.Router();
 var login_1 = require("../appLogic/login");
 // let cookieParser = require('cookie-parser')
 // app.use(cookieParser())
-router.use(require('../middlewares/loginMiddleware'));
 exports.token = {
     'token': 'token',
 };
@@ -36,4 +35,4 @@ router.post('/', function (req, res) {
         res.send({ errorMessage: 'Invalid email or password' });
     }
 });
-module.exports = router;
+exports.default = router;

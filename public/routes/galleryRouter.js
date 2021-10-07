@@ -36,19 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express = require('express');
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
 var router = express.Router();
-var path = require('path');
 var app = express();
 var gallery_1 = require("../appLogic/gallery");
-var fs = require('fs');
-//const destination = path.join('../static/photos/uploads');
-//app.use(express.static(destination))
-//app.use('/static/photos/uploads',express.static('../static/photos/uploads'))
 app.set("view engine", "ejs");
-var cookieParser = require('cookie-parser');
 app.use(cookieParser());
-router.use(require('./auth'));
+router.use(require('../middlewares/auth'));
 router.options('/', function (req, res) {
     res.header('Application-Type', 'multipart/form-data');
     res.send();
@@ -74,4 +70,4 @@ router.get('/', function (req, res) {
         });
     });
 });
-module.exports = router;
+exports.default = router;

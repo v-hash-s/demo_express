@@ -15,7 +15,6 @@ const router = express.Router();
 import { isValidUser, sendToken } from '../appLogic/login'
 // let cookieParser = require('cookie-parser')
 // app.use(cookieParser())
-router.use(require('../middlewares/loginMiddleware'))
 
 export const token: Token = {
     'token': 'token',

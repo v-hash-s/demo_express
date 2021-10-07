@@ -12,7 +12,8 @@ const app = express()
 import { sendGalleryObject, folders } from "../appLogic/gallery";
 app.set("view engine", "ejs");
 app.use(cookieParser())
-router.use(require('./auth'));
+router.use(require('../middlewares/auth'));
+
 
 router.options('/', (req: Request, res: Response) => {
 
